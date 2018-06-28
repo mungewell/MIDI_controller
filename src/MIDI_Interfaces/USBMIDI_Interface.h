@@ -38,6 +38,13 @@ class USBMIDI_Interface : public MIDI_Interface
     }
 
   protected:
+    void write(const uint8_t *buffer, size_t size)
+    {
+#if defined(USBCON) // If the main MCU has a USB connection but is not a Teensy
+        MidiUSB.write(const uint8_t *buffer, size_t size);
+        MidiUSB.flush();
+    }
+#endif
     void sendImpl(uint8_t m, uint8_t c, uint8_t d1, uint8_t d2)
     {
 #if defined(CORE_TEENSY) // If it's a Teensy board
