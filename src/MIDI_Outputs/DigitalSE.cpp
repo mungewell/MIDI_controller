@@ -44,8 +44,9 @@ void DigitalSE::refresh() // Check if the button state changed, and send a MIDI 
       buttonState = state;
       if (count > 0 && count < 11)
       {
-	uint8_t data[11];
+        uint8_t data[11];
 
+        // Build packet
         data[0] = SysExStart;
         data[1] = byte1 & 0x7f;
         data[2] = byte2 & 0x7f;
@@ -55,12 +56,17 @@ void DigitalSE::refresh() // Check if the button state changed, and send a MIDI 
         data[6] = byte6 & 0x7f;
         data[7] = byte7 & 0x7f;
         data[8] = byte8 & 0x7f;
-        data[9] = byte8 & 0x7f;
+        data[9] = byte9 & 0x7f;
         data[10] = byte10 & 0x7f;
-
         data[count + 1] = SysExEnd;
+
         MIDI_Controller.MIDI()->write(data, count + 2);
       }
+    }
+
+    if (stateChange == rising)
+    { // Button is released
+      buttonState = state;
     }
   }
   if (state != prevState)

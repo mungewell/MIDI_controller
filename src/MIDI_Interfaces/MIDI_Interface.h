@@ -26,7 +26,7 @@ public:
   MIDI_Interface(); // Constructor (make this the default MIDI interface)
 
   virtual void begin() {}
-  void write(const uint8_t *buffer, size_t size);          // Send a buffer MIDI packet
+  void write(uint8_t *buffer, size_t size);          // Send a buffer MIDI packet
   void send(uint8_t m, uint8_t c, uint8_t d1, uint8_t d2); // Send a 3-byte MIDI packet
   void send(uint8_t m, uint8_t c, uint8_t d1);             // Send a 2-byte MIDI packet
 
@@ -40,6 +40,7 @@ public:
   void setDefault();                   // Set this MIDI interface as the default interface
 
 protected:
+  virtual void writeImpl(uint8_t *buffer, size_t size) {}
   virtual void sendImpl(uint8_t m, uint8_t c, uint8_t d1, uint8_t d2) {}
   virtual void sendImpl(uint8_t m, uint8_t c, uint8_t d1) {}
 

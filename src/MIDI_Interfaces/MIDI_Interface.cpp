@@ -22,9 +22,9 @@ MIDI_Interface *MIDI_Interface::getDefault() // static function that returns the
 //---------------------------------------------SENDING-MIDI---------------------------------------------//
 
 
-void MIDI_Interface::write(const uint8_t *buffer, size_t size)
+void MIDI_Interface::write(uint8_t *buffer, size_t size)
 {
-    write(buffer, size);
+    writeImpl(buffer, size);
 }
 
 void MIDI_Interface::send(uint8_t m, uint8_t c, uint8_t d1, uint8_t d2)

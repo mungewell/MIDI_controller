@@ -18,6 +18,12 @@ public:
   }
 
 protected:
+  void writeImpl(uint8_t *buffer, size_t size)
+  {
+    for (size_t i=0; i < size; i++)
+      stream.write(buffer[i]); // Send the MIDI message over the stream
+    stream.flush();
+  }
   virtual void sendImpl(uint8_t m, uint8_t c, uint8_t d1, uint8_t d2)
   {
     stream.write(m | c); // Send the MIDI message over the stream
